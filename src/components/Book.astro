@@ -1,7 +1,8 @@
 ---
 import { site, projects, asset, buildTimeline, type Project } from '../lib/data';
 
-const { L, leaves, total } = buildTimeline(projects.length);
+const { L, leaves, total, back, close } = buildTimeline(projects.length);
+const N = projects.length;
 const pad = (n: number) => String(n).padStart(2, '0');
 const INDEX_STOP = 50.5; // scroll unit where the index spread is fully open
 const stopAfter = (k: number) => leaves[k].b + 0.5; // leaf k has finished turning
@@ -11,126 +12,145 @@ const leafStyle = (l: (typeof leaves)[number]) =>
 
 const aboutPhoto = asset(site.about.photo);
 const contactPhoto = asset(site.contact.photo);
-// leaf k (1..L): front = right page, back = next left page.
-//   leaf 1 front = index; leaf k>=2 front = right page of project k-1; leaf k<=N back = left page of project k
-const rightPage = (k: number): Project | undefined => (k >= 2 ? projects[k - 2] : undefined);
-const leftPage = (k: number): Project | undefined => projects[k - 1];
+
+// leaf k (1..L): front = right-hand page, back = the next left-hand page.
+//   leaf 1            front: index
+//   leaf 2..N+1       front: right page of project k-1
+//   leaf 1..N         back : left page of project k
+//   leaf N+1          back : closing page
+//   leaf N+2 (= L)    the back cover — front: inside (endpaper), back: outside (contact + photo)
+const isBackCover = (k: number) => k === L;
+const rightPage = (k: number): Project | undefined => (k >= 2 && k <= N + 1 ? projects[k - 2] : undefined);
+const leftPage = (k: number): Project | undefined => (k <= N ? projects[k - 1] : undefined);
 // leaves are listed last-to-first in the DOM, like the original markup
 const pageLeaves = leaves.filter((l) => l.k >= 1).reverse();
 ---
 <div class="scene">
-  <div class="book" style={`--L:${L}`} data-total={total}>
+  <div class="book" style={`--L:${L};--back-a:${back.a};--back-b:${back.b};--close-a:${close.a};--close-b:${close.b}`} data-total={total}>
     <div class="left-page"></div>
+    <div class="board-r"></div>
     <div class="gutter"></div>
-
-    <!-- back cover, under the stack: contact + picture -->
-    <section class="base-right back-cover" aria-label="Back cover — contact">
-      <div class="cv-label">{site.contact.label}</div>
-      <h3 class="cv-title">{site.contact.title[0]}<br>{site.contact.title[1]}</h3>
-      {contactPhoto
-        ? <img class="cv-photo" src={contactPhoto} alt={site.name} />
-        : <div class="cv-photo" role="img" aria-label="Photo placeholder"></div>}
-      <div class="meta-row"><span>EMAIL</span><span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></span></div>
-      <div class="meta-row"><span>LOCATION</span><span>{site.contact.location}</span></div>
-      <div class="meta-row"><span>STATUS</span><span>{site.contact.status}</span></div>
-      {site.contact.links.length > 0 && (
-        <div class="cv-links">
-          {site.contact.links.map((l) => <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label.toUpperCase()} ↗</a>)}
-        </div>
-      )}
-    </section>
 
     {pageLeaves.map((l) => {
       const k = l.k;
       const right = rightPage(k);
       const left = leftPage(k);
       return (
-        <div class="leaf" style={leafStyle(l)} data-leaf={k}>
-          <div class="face front paper" id={right ? `page-${right.slug}` : 'page-index'}>
-            {!right ? (
-              <>
-                <div class="pg-label">{site.index.label}</div>
-                <h3 class="pg-title">{site.index.title[0]}<br>{site.index.title[1]}</h3>
-                {projects.length === 0
-                  ? <p class="idx-empty">No projects yet — add one in src/data/projects.json.</p>
-                  : (
-                    <ol class="idx-list" data-dense={projects.length > 8 ? '' : undefined} aria-label="Projects">
-                      {projects.map((p, i) => (
-                        <li>
-                          <a class="goto" href={`#${p.slug}`} data-stop={stopAfter(i + 1)} data-spread={i + 1}>
-                            <span class="no">{pad(i + 1)}</span>
-                            <span><b>{p.name}</b><i>{p.tagline}</i></span>
-                            <span class="yr">{p.year ?? ''}</span>
-                            <span class="ar" aria-hidden="true">→</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ol>
+        <div class={`leaf${isBackCover(k) ? ' leaf-backcover' : ''}`} style={leafStyle(l)} data-leaf={k}>
+          <!-- ===== front face = right-hand page ===== -->
+          {isBackCover(k) ? (
+            <div class="face front paper endpaper">
+              <div class="pg-label">{site.end.label}</div>
+              <div class="end-mark" aria-hidden="true">{site.end.mark}</div>
+              <p class="pg-body">{site.end.body}</p>
+              <a class="pg-back goto" href="#index" data-stop={INDEX_STOP} data-spread="0">← ALL PROJECTS</a>
+              <i class="shade"></i>
+            </div>
+          ) : (
+            <div class="face front paper" id={right ? `page-${right.slug}` : 'page-index'}>
+              {!right ? (
+                <>
+                  <div class="pg-label">{site.index.label}</div>
+                  <h3 class="pg-title">{site.index.title[0]}<br>{site.index.title[1]}</h3>
+                  {projects.length === 0
+                    ? <p class="idx-empty">No projects yet — add one in src/data/projects.json.</p>
+                    : (
+                      <ol class="idx-list" data-dense={projects.length > 8 ? '' : undefined} aria-label="Projects">
+                        {projects.map((p, i) => (
+                          <li>
+                            <a class="goto" href={`#${p.slug}`} data-stop={stopAfter(i + 1)} data-spread={i + 1}>
+                              <span class="no">{pad(i + 1)}</span>
+                              <span><b>{p.name}</b><i>{p.tagline}</i></span>
+                              <span class="yr">{p.year ?? ''}</span>
+                              <span class="ar" aria-hidden="true">→</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                </>
+              ) : (
+                <>
+                  <img class="pj-hero" src={asset(right.hero.src)} alt={right.hero.alt || right.name}
+                    data-zoom data-caption={right.hero.caption ?? right.name} />
+                  {right.gallery.length > 0 && (
+                    <>
+                      <div class="pj-shots-h">SCREENSHOTS &amp; DIAGRAMS</div>
+                      <div class="pj-shots" data-n={right.gallery.length}>
+                        {right.gallery.map((g) => (
+                          <img src={asset(g.src)} alt={g.alt} loading="lazy" data-zoom data-caption={g.caption ?? g.alt} />
+                        ))}
+                      </div>
+                    </>
                   )}
-              </>
-            ) : (
-              <>
-                <img class="pj-hero" src={asset(right.hero.src)} alt={right.hero.alt || right.name}
-                  data-zoom data-caption={right.hero.caption ?? right.name} />
-                {right.gallery.length > 0 && (
-                  <>
-                    <div class="pj-shots-h">SCREENSHOTS &amp; DIAGRAMS</div>
-                    <div class="pj-shots" data-n={right.gallery.length}>
-                      {right.gallery.map((g) => (
-                        <img src={asset(g.src)} alt={g.alt} loading="lazy" data-zoom data-caption={g.caption ?? g.alt} />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-            <i class="shade"></i>
-          </div>
+                </>
+              )}
+              <i class="shade"></i>
+            </div>
+          )}
 
-          <div class="face back paper">
-            {left ? (
-              <>
-                <div class="pg-label">{pad(k)} / PROJECT</div>
-                <h3 class="pg-title">{left.name}</h3>
-                {left.tagline && <p class="pg-lead">{left.tagline}</p>}
-                <p class="pg-body">{left.description}</p>
-                {left.features.length > 0 && (
-                  <>
-                    <div class="pj-feat-h">KEY FEATURES</div>
-                    <ul class="pj-feat">{left.features.map((f) => <li>{f}</li>)}</ul>
-                  </>
-                )}
-                {(left.year || left.role) && (
-                  <div class="rule"></div>
-                )}
-                {left.year && <div class="meta-row"><span>YEAR</span><span>{left.year}</span></div>}
-                {left.role && <div class="meta-row"><span>ROLE</span><span>{left.role}</span></div>}
-                {left.stack.length > 0 && <div class="pj-tags">{left.stack.map((s) => <span>{s}</span>)}</div>}
-                {left.links.length > 0 && (
-                  <div class="pj-links">
-                    {left.links.map((x) => <a href={x.url} target="_blank" rel="noopener noreferrer">{x.label.toUpperCase()} ↗</a>)}
-                  </div>
-                )}
-                <a class="pg-back goto" href="#index" data-stop={INDEX_STOP} data-spread="0">← ALL PROJECTS</a>
-              </>
-            ) : (
-              <>
-                <div class="pg-label">{site.closing.label}</div>
-                <h3 class="pg-title">{site.closing.title[0]}<br>{site.closing.title[1]}</h3>
-                <p class="pg-body">{site.closing.body}</p>
-                <a class="pg-back goto" href="#index" data-stop={INDEX_STOP} data-spread="0">← ALL PROJECTS</a>
-              </>
-            )}
-            <i class="shade shade-b"></i>
-          </div>
+          <!-- ===== back face = the next left-hand page ===== -->
+          {isBackCover(k) ? (
+            <div class="face back hardcover cover-back" aria-label="Back cover — contact">
+              <span class="spine"></span>
+              <div class="cv-label">{site.contact.label}</div>
+              <h3 class="cv-title">{site.contact.title[0]}<br>{site.contact.title[1]}</h3>
+              {contactPhoto
+                ? <img class="cv-photo" src={contactPhoto} alt={site.name} />
+                : <div class="cv-photo" role="img" aria-label="Photo placeholder"></div>}
+              <div class="meta-row"><span>EMAIL</span><span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></span></div>
+              <div class="meta-row"><span>LOCATION</span><span>{site.contact.location}</span></div>
+              <div class="meta-row"><span>STATUS</span><span>{site.contact.status}</span></div>
+              {site.contact.links.length > 0 && (
+                <div class="cv-links">
+                  {site.contact.links.map((x) => <a href={x.url} target="_blank" rel="noopener noreferrer">{x.label.toUpperCase()} ↗</a>)}
+                </div>
+              )}
+              <i class="shade shade-b"></i>
+            </div>
+          ) : (
+            <div class="face back paper">
+              {left ? (
+                <>
+                  <div class="pg-label">{pad(k)} / PROJECT</div>
+                  <h3 class="pg-title">{left.name}</h3>
+                  {left.tagline && <p class="pg-lead">{left.tagline}</p>}
+                  <p class="pg-body">{left.description}</p>
+                  {left.features.length > 0 && (
+                    <>
+                      <div class="pj-feat-h">KEY FEATURES</div>
+                      <ul class="pj-feat">{left.features.map((f) => <li>{f}</li>)}</ul>
+                    </>
+                  )}
+                  {(left.year || left.role) && <div class="rule"></div>}
+                  {left.year && <div class="meta-row"><span>YEAR</span><span>{left.year}</span></div>}
+                  {left.role && <div class="meta-row"><span>ROLE</span><span>{left.role}</span></div>}
+                  {left.stack.length > 0 && <div class="pj-tags">{left.stack.map((s) => <span>{s}</span>)}</div>}
+                  {left.links.length > 0 && (
+                    <div class="pj-links">
+                      {left.links.map((x) => <a href={x.url} target="_blank" rel="noopener noreferrer">{x.label.toUpperCase()} ↗</a>)}
+                    </div>
+                  )}
+                  <a class="pg-back goto" href="#index" data-stop={INDEX_STOP} data-spread="0">← ALL PROJECTS</a>
+                </>
+              ) : (
+                <>
+                  <div class="pg-label">{site.closing.label}</div>
+                  <h3 class="pg-title">{site.closing.title[0]}<br>{site.closing.title[1]}</h3>
+                  <p class="pg-body">{site.closing.body}</p>
+                </>
+              )}
+              <i class="shade shade-b"></i>
+            </div>
+          )}
         </div>
       );
     })}
 
-    <!-- cover -->
+    <!-- front cover -->
     <div class="leaf leaf-cover" style={leafStyle(leaves[0])} data-leaf="0">
-      <div class="face front cover-front">
-        <span class="spine"></span><span class="edge"></span>
+      <div class="face front hardcover cover-front">
+        <span class="spine"></span><span class="edge"></span><span class="foot"></span>
         <div class="cover-kicker">{site.role}</div>
         <div class="cover-sub">PORTFOLIO / {site.year}</div>
         <h2 class="cover-name">{site.nameLines[0]}<br>{site.nameLines[1]}</h2>
@@ -143,6 +163,7 @@ const pageLeaves = leaves.filter((l) => l.k >= 1).reverse();
             ))}
           </div>
         </div>
+        <div class="cover-hint">{site.coverHint}</div>
         <i class="shade"></i>
       </div>
       <!-- inside cover = left page of the first spread: about -->
@@ -160,7 +181,5 @@ const pageLeaves = leaves.filter((l) => l.k >= 1).reverse();
         <i class="shade shade-b"></i>
       </div>
     </div>
-
-    <div class="page-edges" aria-hidden="true"></div>
   </div>
 </div>

@@ -1,81 +1,143 @@
 {
   "name": "Muhit Rahman",
-  "nameLines": ["MUHIT", "RAHMAN"],
+  "nameLines": [
+    "MUHIT",
+    "RAHMAN"
+  ],
   "role": "UI / UX DESIGNER",
   "year": "2026",
   "tagline": "Designing clear experiences from complex systems.",
   "description": "Portfolio of Muhit Rahman — selected projects, case studies and contact details.",
-
   "hero": {
     "eyebrow": "MUHIT RAHMAN / PORTFOLIO",
-    "title": ["Ideas become", "experiences."],
-    "time": "9:05 pm",
-    "scrollHint": "SCROLL ↓"
+    "title": [
+      "Ideas become",
+      "experiences."
+    ],
+    "scrollHint": "SCROLL ↓",
+    "timeZone": "Asia/Dhaka"
   },
-
   "facade": {
     "posterKicker": "DESIGN WORKSPACE",
-    "posterTitle": ["MY MAIN", "DESIGN TOOL."],
+    "posterTitle": [
+      "MY MAIN",
+      "DESIGN TOOL."
+    ],
     "posterFoot": "UI / UX · PROTOTYPES · SYSTEMS",
     "doorLabel": "SCROLL TO ENTER"
   },
-
   "scene": {
     "showPlaceholderScenery": true,
     "props": []
   },
-
   "practiceTitle": "PRACTICE INDEX   CORE 04",
   "practice": [
-    { "no": "01", "title": "UX Research", "note": "Insight & direction" },
-    { "no": "02", "title": "Product Design", "note": "Flows & interfaces" },
-    { "no": "03", "title": "Design Systems", "note": "Logic & consistency" },
-    { "no": "04", "title": "Prototyping", "note": "Motion & validation" }
+    {
+      "no": "01",
+      "title": "UX Research",
+      "note": "Insight & direction"
+    },
+    {
+      "no": "02",
+      "title": "Product Design",
+      "note": "Flows & interfaces"
+    },
+    {
+      "no": "03",
+      "title": "Design Systems",
+      "note": "Logic & consistency"
+    },
+    {
+      "no": "04",
+      "title": "Prototyping",
+      "note": "Motion & validation"
+    }
   ],
-
   "icons": [
-    { "label": "LOGO DESIGN", "icon": "logo" },
-    { "label": "MOBILE APP DESIGN", "icon": "mobile" },
-    { "label": "PRODUCT DESIGN", "icon": "product" },
-    { "label": "WEB DESIGN", "icon": "web" }
+    {
+      "label": "LOGO DESIGN",
+      "icon": "logo"
+    },
+    {
+      "label": "MOBILE APP DESIGN",
+      "icon": "mobile"
+    },
+    {
+      "label": "PRODUCT DESIGN",
+      "icon": "product"
+    },
+    {
+      "label": "WEB DESIGN",
+      "icon": "web"
+    }
   ],
-
   "about": {
     "label": "ABOUT ME",
-    "title": ["Designing trust", "into everyday", "journeys."],
+    "title": [
+      "Designing trust",
+      "into everyday",
+      "journeys."
+    ],
     "bio": "Placeholder bio — a few lines about the kind of products you build and how you approach them.",
     "photo": null,
     "stats": [
-      { "value": "0+", "label": "YEARS" },
-      { "value": "0+", "label": "PROJECTS" }
+      {
+        "value": "0+",
+        "label": "YEARS"
+      },
+      {
+        "value": "0+",
+        "label": "PROJECTS"
+      }
     ],
     "timeline": [
-      { "when": "YEAR — NOW", "what": "COMPANY · ROLE" },
-      { "when": "YEAR — YEAR", "what": "COMPANY · ROLE" }
+      {
+        "when": "YEAR — NOW",
+        "what": "COMPANY · ROLE"
+      },
+      {
+        "when": "YEAR — YEAR",
+        "what": "COMPANY · ROLE"
+      }
     ]
   },
-
   "index": {
     "label": "PROJECT INDEX",
-    "title": ["Selected", "work."],
+    "title": [
+      "Selected",
+      "work."
+    ],
     "hint": "Click a project to jump to its page."
   },
-
   "closing": {
-    "label": "THE END",
-    "title": ["Thanks for", "reading."],
-    "body": "Every project here started with a real problem and a conversation. The back cover has the best ways to reach me."
+    "label": "THE LAST PAGE",
+    "title": [
+      "Thanks for",
+      "reading."
+    ],
+    "body": "Every project here started with a real problem and a conversation. Keep scrolling — the book closes on its back cover, where you can reach me."
   },
-
   "contact": {
     "label": "CONTACT",
-    "title": ["Let's build", "something."],
+    "title": [
+      "Let's build",
+      "something."
+    ],
     "photo": null,
     "email": "hello@example.com",
     "location": "Placeholder City",
     "status": "OPEN TO WORK",
     "links": [
-      { "label": "GitHub", "url": "https://github.com/Muhit-1" }
+      {
+        "label": "GitHub",
+        "url": "https://github.com/Muhit-1"
+      }
     ]
+  },
+  "coverHint": "SCROLL TO OPEN PORTFOLIO",
+  "end": {
+    "label": "END",
+    "mark": "FIN.",
+    "body": "Scroll on to close the book."
   }
 }

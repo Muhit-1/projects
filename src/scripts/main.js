@@ -19,6 +19,18 @@
     ticksEl.innerHTML = rows + '<span class="gauge-fill">' + rows + '</span>';
   }
 
+  /* ---- top-left clock: current time in Bangladesh (Asia/Dhaka) ---- */
+  var clock = document.querySelector('[data-clock]');
+  if (clock) {
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: clock.dataset.tz || 'Asia/Dhaka' });
+    } catch (e) { fmt = null; }
+    var tick = function () { if (fmt) clock.textContent = fmt.format(new Date()).replace(/\s?([AP])M/, function (m, x) { return ' ' + x.toLowerCase() + 'm'; }); };
+    tick();
+    setInterval(tick, 15000);
+  }
+
   if (!scroller) return;
 
   var queued = false;
@@ -44,6 +56,7 @@
 
   function setSpread(n) {
     spread = Math.max(0, Math.min(leafCount, n));
+    document.querySelector('.book').classList.toggle('is-closed', spread >= leafCount);
     document.querySelectorAll('.leaf').forEach(function (leaf) {
       leaf.classList.toggle('is-flipped', Number(leaf.dataset.leaf) <= spread);
     });

@@ -12,6 +12,7 @@
   --red:#C8102E;
   --red-deep:#8C1F18;
   --door:#2F4B4B;
+  --board:#B10E1A;
   --text:#2A2723;
   --u:6.6vh; /* one "scroll unit" = 1% of the original 660vh scroll run; every range below is in these */
 }
@@ -32,14 +33,23 @@ body{
    ACT 1 — STREET SCENE
    ============================================================ */
 .hero{
-  position:absolute; inset:0; z-index:30; perspective:1200px; transform-origin:50% 56%;
+  /* --zoom: the scenery is drawn this much bigger from the start (shop closer to the camera).
+     The push then runs from that state and steers the doorway to the screen centre, where the book appears. */
+  --fw:min(620px,52vw); --zoom:1.42;
+  --dx:calc(var(--fw) * var(--zoom) * -0.19);          /* doorway centre, left of screen centre */
+  --dy:calc((6 + 5 * var(--zoom)) * 1vh);              /* …and below it */
+  --s60:calc(1.7 / var(--zoom)); --s100:calc(2.9 / var(--zoom));
+  --k60:calc(-1 * var(--s60) * (var(--s60) - 1) / (var(--s100) - 1)); --k100:calc(-1 * var(--s100));
+  position:absolute; inset:0; z-index:30; perspective:1200px; transform-origin:50% 50%;
   animation:heroPush 1ms linear both; animation-timeline:--s; animation-range:calc(9 * var(--u)) calc(24 * var(--u));
 }
 @keyframes heroPush{
-  0%{   opacity:1; transform:scale(1); }
-  60%{  opacity:1; transform:scale(1.7); }
-  100%{ opacity:0; transform:scale(2.9); visibility:hidden; } /* hidden at the end so it stops eating clicks */
+  0%{   opacity:1; transform:translate(0,0) scale(1); }
+  60%{  opacity:1; transform:translate(calc(var(--dx) * var(--k60)), calc(var(--dy) * var(--k60))) scale(var(--s60)); }
+  100%{ opacity:0; transform:translate(calc(var(--dx) * var(--k100)), calc(var(--dy) * var(--k100))) scale(var(--s100)); visibility:hidden; } /* hidden at the end so it stops eating clicks */
 }
+/* everything except the sky and the text is scaled up together */
+.scenery{ position:absolute; inset:0; transform:scale(var(--zoom)); transform-origin:50% 56%; }
 
 .sky{ position:absolute; inset:0;
   background:linear-gradient(180deg,#2E7FC2 0%,#5EA6D8 42%,#9CC9E6 68%,#D9C9A8 100%); }
@@ -55,7 +65,7 @@ body{
 /* shop facade */
 .facade{
   position:absolute; left:50%; bottom:20%; transform:translateX(-50%);
-  width:min(620px,52vw); height:58vh; background:linear-gradient(180deg,#D8232A,#B81B22);
+  width:var(--fw); height:58vh; background:linear-gradient(180deg,#D8232A,#B81B22);
   box-shadow:0 30px 60px rgba(0,0,0,.35), inset 0 0 90px rgba(0,0,0,.18);
 }
 .awning{ position:absolute; left:-4%; right:-4%; top:14%; height:26px;
@@ -153,9 +163,16 @@ body{
 @keyframes sceneZoom{ from{transform:scale(1)} to{transform:scale(1.16)} }
 
 .book{
-  --bw:min(780px,86vw,91vh); --px:calc(var(--bw) / 780); /* --px = 1px at full size; all page type scales with the book */
+  --bw:min(105vh,90vw); --px:calc(var(--bw) / 780); /* --px = 1px at full size; all page type scales with the book */
   position:relative; width:var(--bw); aspect-ratio:780 / 548; transform-style:preserve-3d;
-  animation:bookMove 1ms linear both; animation-timeline:--s; animation-range:calc(18 * var(--u)) calc(48 * var(--u));
+  transform-origin:75% 50%; /* centre of the closed cover, so the cover (not the spine) sits mid-screen while it flies in */
+  animation:bookMove 1ms linear both, bookClose 1ms linear forwards; animation-timeline:--s,--s;
+  animation-range:calc(18 * var(--u)) calc(48 * var(--u)), calc(var(--close-a) * var(--u)) calc(var(--close-b) * var(--u));
+}
+/* at the very end the book shuts on its back cover and slides to the centre */
+@keyframes bookClose{
+  from{ transform:translateX(0)   translateY(0) scale(1) rotateX(0deg) rotateY(0deg); }
+  to{   transform:translateX(25%) translateY(0) scale(1) rotateX(0deg) rotateY(0deg); }
 }
 @keyframes bookMove{
   0%{   transform:translateX(-25%) translateY(6%) scale(.48) rotateX(16deg) rotateY(-28deg); }
@@ -166,24 +183,30 @@ body{
 .book::after{ content:''; position:absolute; left:4%; right:4%; bottom:-30px; height:44px;
   background:rgba(0,0,0,.72); filter:blur(28px); transform:translateZ(-40px); }
 
+/* red boards extend a little past the pages, like a hardcover */
+.left-page,.board-r{ --board-w:calc(var(--px)*7); }
 .left-page{
   position:absolute; top:0; left:0; width:50%; height:100%;
   background:linear-gradient(90deg,var(--paper-2),var(--paper) 22%);
-  box-shadow:inset -22px 0 30px -18px rgba(0,0,0,.45); opacity:0;
-  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(34 * var(--u)) calc(39 * var(--u));
+  box-shadow:inset -22px 0 30px -18px rgba(0,0,0,.45),
+             0 0 0 var(--board-w) var(--board), 0 0 0 calc(var(--board-w) + 1px) rgba(0,0,0,.45);
+  opacity:0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(44 * var(--u)) calc(49 * var(--u));
 }
+.board-r{
+  position:absolute; top:0; left:50%; width:50%; height:100%; background:var(--board);
+  box-shadow:0 0 0 var(--board-w) var(--board), 0 0 0 calc(var(--board-w) + 1px) rgba(0,0,0,.45);
+  opacity:0;
+  animation:fadeIn 1ms linear both, boardOut 1ms linear forwards; animation-timeline:--s,--s;
+  animation-range:calc(44 * var(--u)) calc(49 * var(--u)), calc(var(--back-a) * var(--u)) calc(var(--back-b) * var(--u));
+}
+@keyframes boardOut{ from{opacity:1} to{opacity:0} }
 /* binding shadow down the middle, sits above the flat pages */
 .gutter{
   position:absolute; top:0; left:50%; width:44px; height:100%; margin-left:-22px; z-index:calc(12 + var(--L));
   pointer-events:none; opacity:0;
   background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.34) 45%,rgba(0,0,0,.34) 55%,rgba(0,0,0,0));
-  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(36 * var(--u)) calc(44 * var(--u));
-}
-.page-edges{
-  position:absolute; top:6px; bottom:6px; left:100%; width:7px; z-index:calc(11 + var(--L)); opacity:0;
-  background:repeating-linear-gradient(180deg,#DCD5C4 0 2px,#C7BFAC 2px 3px);
-  border-radius:0 2px 2px 0;
-  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(40 * var(--u)) calc(48 * var(--u));
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(45 * var(--u)) calc(49 * var(--u));
 }
 
 .leaf{
@@ -242,31 +265,55 @@ body{
 
 /* static mode (no scroll-driven animation / reduced motion): main.js sets .is-static and marks .is-flipped */
 .is-static .track{ height:100vh; }
+.is-static .book{ transition:transform .7s ease; }
+.is-static .book.is-closed{ transform:translateX(25%); }
+.is-static .book.is-closed .board-r{ opacity:0; }
 .is-static .leaf,.is-static .leaf .shade{ animation:none; }
 .is-static .leaf .shade{ display:none; }
 .is-static .leaf.is-flipped{ transform:translateZ(var(--tz1)) rotateY(var(--end)); z-index:var(--z1); }
 
-/* --- cover artwork --- */
-.cover-front{
+/* --- cover artwork: front cover and back cover share .hardcover --- */
+.face.hardcover{
   background:linear-gradient(115deg,#D4121F,#B60E1B 60%,#9E0C17);
   padding:calc(var(--px)*34) calc(var(--px)*36); color:#FFF3E4;
-  box-shadow:inset 28px 0 44px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(0,0,0,.3);
 }
-.cover-front .spine{ position:absolute; top:0; left:0; width:16px; height:100%;
-  background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0)); }
-.cover-front .edge{ position:absolute; top:0; right:0; width:6px; height:100%;
-  background:linear-gradient(90deg,rgba(255,255,255,.2),rgba(255,255,255,.6)); }
+/* leather grain */
+.face.hardcover::before{
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.5; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.face.cover-front{ box-shadow:inset 30px 0 46px -30px rgba(0,0,0,.85), inset 0 0 0 1px rgba(0,0,0,.22), 0 0 0 1px rgba(0,0,0,.35); }
+.face.cover-back{  box-shadow:inset -30px 0 46px -30px rgba(0,0,0,.85), inset 0 0 0 1px rgba(0,0,0,.22), 0 0 0 1px rgba(0,0,0,.35); }
+/* hinge: a groove with a light lip, like a cloth-bound book */
+.hardcover .spine{ position:absolute; top:0; bottom:0; width:9%;
+  background:linear-gradient(90deg,rgba(0,0,0,.38) 0,rgba(255,255,255,.14) 38%,rgba(0,0,0,.5) 70%,rgba(255,255,255,.22) 75%,rgba(0,0,0,0) 100%); }
+.cover-front .spine{ left:0; }
+.cover-back .spine{ right:0; transform:scaleX(-1); }
+/* page block peeking out of the board */
+.cover-front .edge{ position:absolute; top:0; bottom:0; right:0; width:calc(var(--px)*7);
+  background:repeating-linear-gradient(180deg,#F1E8D4 0 2px,#CFC5AE 2px 3px); box-shadow:inset 2px 0 3px rgba(0,0,0,.25); }
+.cover-front .foot{ position:absolute; left:0; right:0; bottom:0; height:calc(var(--px)*5);
+  background:repeating-linear-gradient(90deg,#F1E8D4 0 2px,#CFC5AE 2px 3px); box-shadow:inset 0 2px 3px rgba(0,0,0,.25); }
+/* debossed type */
+.hardcover .cover-kicker,.hardcover .cover-sub,.hardcover .cover-tag,.hardcover .cv-label,.hardcover .idx-grid,.hardcover h4{
+  text-shadow:0 1px 0 rgba(0,0,0,.35); }
 .cover-kicker{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*11); letter-spacing:.2em; font-weight:500; }
 .cover-sub{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*11); letter-spacing:.2em; margin-top:calc(var(--px)*26); }
-.cover-name{ margin:calc(var(--px)*8) 0 0; font-size:calc(var(--px)*50); font-weight:800; line-height:.95; letter-spacing:-.01em; color:#150406; text-transform:uppercase; }
+.cover-name{ margin:calc(var(--px)*8) 0 0; font-size:calc(var(--px)*50); font-weight:800; line-height:.95; letter-spacing:-.01em; color:#150406; text-transform:uppercase;
+  text-shadow:0 1px 0 rgba(255,255,255,.28), 0 -1px 0 rgba(0,0,0,.45); }
 .cover-tag{ margin:calc(var(--px)*14) 0 0; font-size:calc(var(--px)*14); line-height:1.35; max-width:82%; font-weight:600; }
-.cover-index{ position:absolute; left:calc(var(--px)*36); right:calc(var(--px)*36); bottom:calc(var(--px)*36); }
+.cover-index{ position:absolute; left:calc(var(--px)*36); right:calc(var(--px)*36); bottom:calc(var(--px)*46); }
 .cover-index h4{ margin:0 0 calc(var(--px)*12); font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5);
   letter-spacing:.2em; font-weight:500; border-bottom:1px solid rgba(255,243,228,.5); padding-bottom:calc(var(--px)*8); }
-.idx-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:calc(var(--px)*10) calc(var(--px)*18); }
+.idx-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.idx-grid > div{ padding:calc(var(--px)*8) calc(var(--px)*10); border-left:1px solid rgba(255,243,228,.35); }
+.idx-grid > div:nth-child(n+3){ border-top:1px solid rgba(255,243,228,.35); }
+.idx-grid > div:nth-child(odd){ padding-left:0; border-left:0; }
 .idx-grid b{ display:block; font-size:calc(var(--px)*13); font-weight:700; }
 .idx-grid span{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); }
 .idx-no{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); font-style:normal; }
+.cover-hint{ position:absolute; left:0; right:0; bottom:calc(var(--px)*16); text-align:center;
+  font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*9.5); letter-spacing:.24em; opacity:.7; }
 
 /* ============================================================
    CHROME — side icons, gauge, brand
@@ -307,7 +354,7 @@ body{
   .scene{ animation:none !important; opacity:1; transform:none !important; }
   .book{ animation:none !important; transform:none !important; }
   .leaf,.leaf .shade{ animation:none !important; }
-  .left-page,.gutter,.page-edges,.icons,.gauge,.brand{ animation:none !important; opacity:1; }
+  .left-page,.board-r,.gutter,.icons,.gauge,.brand{ animation:none !important; opacity:1; }
   .gauge-fill{ animation:none !important; height:100%; }
 }
 
@@ -316,12 +363,12 @@ body{
   .hero{ opacity:0; }
   .scene{ opacity:1; }
   .book{ transform:none; }
-  .left-page,.gutter,.page-edges,.icons,.gauge,.brand{ opacity:1; }
+  .left-page,.board-r,.gutter,.icons,.gauge,.brand{ opacity:1; }
 }
 
 @media (max-width:760px){
   .icons{ display:none; }
   .gauge{ left:12px; }
-  .facade{ width:74vw; }
+  .hero{ --fw:74vw; --zoom:1.15; }
   .hero-copy{ left:20px; max-width:80vw; }
 }

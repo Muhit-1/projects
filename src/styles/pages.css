@@ -68,20 +68,22 @@
   box-shadow:0 calc(var(--px)*2) calc(var(--px)*6) rgba(0,0,0,.25); cursor:zoom-in; }
 .pj-shots[data-n="3"] img{ aspect-ratio:4 / 3; }
 
-/* --- back cover: the board under the stack, seen after the last page turns --- */
-.book > .base-right.back-cover{
-  background:linear-gradient(245deg,#D4121F,#B60E1B 60%,#9E0C17); color:#FFF3E4;
-  box-shadow:inset 28px 0 44px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(0,0,0,.3);
-}
-.back-cover .cv-label{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5); letter-spacing:.2em; font-weight:500; }
-.back-cover .cv-title{ margin:calc(var(--px)*10) 0 calc(var(--px)*12); font-size:calc(var(--px)*27); font-weight:800; line-height:1.02; color:#150406; text-transform:uppercase; }
-.back-cover .cv-photo{ display:block; width:100%; height:calc(var(--px)*150); object-fit:cover; margin-bottom:calc(var(--px)*12);
-  background:rgba(0,0,0,.22); box-shadow:0 calc(var(--px)*4) calc(var(--px)*12) rgba(0,0,0,.35); }
-.back-cover .meta-row{ color:#FFF3E4; border-bottom-color:rgba(255,243,228,.4); }
-.back-cover .meta-row a{ color:inherit; }
-.back-cover .cv-links{ display:flex; gap:calc(var(--px)*14); flex-wrap:wrap; margin-top:calc(var(--px)*12); }
-.back-cover .cv-links a{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5); letter-spacing:.12em; color:#FFF3E4;
+/* --- back cover (outside): contact + picture --- */
+.cover-back .cv-label{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5); letter-spacing:.2em; font-weight:500; }
+.cover-back .cv-title{ margin:calc(var(--px)*10) 0 calc(var(--px)*12); font-size:calc(var(--px)*30); font-weight:800; line-height:1.02; color:#150406; text-transform:uppercase;
+  text-shadow:0 1px 0 rgba(255,255,255,.28), 0 -1px 0 rgba(0,0,0,.45); }
+.cover-back .cv-photo{ display:block; width:100%; height:calc(var(--px)*150); object-fit:cover; margin-bottom:calc(var(--px)*12);
+  background:rgba(0,0,0,.25); border:1px solid rgba(255,243,228,.35); box-shadow:0 calc(var(--px)*4) calc(var(--px)*12) rgba(0,0,0,.35); }
+.cover-back .meta-row{ color:#FFF3E4; border-bottom-color:rgba(255,243,228,.4); }
+.cover-back .meta-row a{ color:inherit; }
+.cover-back .cv-links{ display:flex; gap:calc(var(--px)*14); flex-wrap:wrap; margin-top:calc(var(--px)*12); }
+.cover-back .cv-links a{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5); letter-spacing:.12em; color:#FFF3E4;
   border-bottom:1px solid currentColor; text-decoration:none; }
+
+/* --- inside back cover (right page of the last spread) --- */
+.endpaper{ text-align:center; padding-top:calc(var(--px)*70); }
+.endpaper .end-mark{ font-size:calc(var(--px)*90); font-weight:800; color:var(--red); line-height:1; letter-spacing:-.02em; }
+.endpaper .pg-body{ max-width:80%; margin:calc(var(--px)*14) auto 0; }
 
 /* --- lightbox + static-mode nav (outside the book) --- */
 .lightbox{ border:0; padding:0; background:transparent; max-width:92vw; max-height:92vh; }

@@ -66,10 +66,10 @@ export interface Leaf {
 }
 
 export function buildTimeline(projectCount: number) {
-  // leaves: 1 index page + 1 per project. Each leaf's front is a right-hand page,
-  // its back the next left-hand page.
-  const L = projectCount + 1;
-  const step = Math.min(0.4, 1.2 / L); // fan angle so later pages sit on top of the left stack
+  // leaves: 1 index page + 1 per project + the back cover. Each leaf's front is a right-hand page,
+  // its back the next left-hand page (the last leaf's back is the outside of the back cover).
+  const L = projectCount + 2;
+  const step = 0.05; // tiny fan; stacking order on the left comes from --tz1, so pages can lie almost flat
   const leaves: Leaf[] = [];
   for (let k = 0; k <= L; k++) {
     const a = k === 0 ? COVER.a : FIRST_TURN + TURN_STEP * (k - 1);
@@ -82,9 +82,13 @@ export function buildTimeline(projectCount: number) {
       tz1: 1 + k, // left stack: last page turned is highest
       z0: 10 * (L + 1 - k),
       z1: 11 + k,
-      end: -179.4 + step * k,
+      end: -179.6 + step * k,
     });
   }
-  const total = leaves[L].b + 5;
-  return { L, leaves, total };
+  const last = leaves[L];
+  // the board behind the right pages fades as the back cover swings over; then the shut book slides to the centre
+  const back = { a: last.a + 6, b: last.b };
+  const close = { a: last.b - 5, b: last.b + 4 };
+  const total = close.b + 4;
+  return { L, leaves, total, back, close };
 }

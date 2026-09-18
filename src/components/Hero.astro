@@ -16,6 +16,7 @@ const placeholders = scene.showPlaceholderScenery;
 <!-- ============ ACT 1 — STREET SCENE + DOORS ============ -->
 <div class="hero">
   <div class="sky"></div>
+  <div class="scenery">
   {placeholders && (
     <div class="skyline">
       <i style="left:2%;  width:12%; height:46%; background:#B9695C"></i>
@@ -82,9 +83,10 @@ const placeholders = scene.showPlaceholderScenery;
   {front.map((p) => <img class="prop" src={asset(p.src)} alt={p.alt ?? ''} style={propStyle(p)} />)}
 
   <div class="road"></div>
+  </div>
   <div class="hero-scrim"></div>
 
-  <div class="hero-time">{hero.time}</div>
+  <div class="hero-time" data-clock data-tz={hero.timeZone} aria-label="Current time in Bangladesh"></div>
   <div class="hero-copy">
     <div class="hero-eyebrow">{hero.eyebrow}</div>
     <h1 class="hero-title">{hero.title[0]}<br>{hero.title[1]}</h1>
