@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "sample-one",
+    "name": "Sample Project One",
+    "tagline": "A short one-line pitch for this project.",
+    "description": "Placeholder description. Say what the project is, who it is for and what problem it solves. Two to four sentences fits the page comfortably.",
+    "features": [
+      "First key feature, in one short line",
+      "Second key feature, in one short line",
+      "Third key feature, in one short line",
+      "Fourth key feature, in one short line"
+    ],
+    "year": "2026",
+    "role": "Design & build",
+    "stack": ["Figma", "Astro", "TypeScript"],
+    "links": [
+      { "label": "LIVE DEMO", "url": "https://example.com" },
+      { "label": "SOURCE", "url": "https://github.com/Muhit-1" }
+    ],
+    "hero": { "src": "projects/sample-one/hero.svg", "alt": "Sample Project One — main preview" },
+    "gallery": [
+      { "src": "projects/sample-one/shot-1.svg", "alt": "Screenshot 1", "caption": "Screenshot 1 — caption shown when enlarged" },
+      { "src": "projects/sample-one/shot-2.svg", "alt": "Screenshot 2", "caption": "Screenshot 2" },
+      { "src": "projects/sample-one/shot-3.svg", "alt": "Screenshot 3", "caption": "Screenshot 3" },
+      { "src": "projects/sample-one/shot-4.svg", "alt": "Screenshot 4", "caption": "Screenshot 4" }
+    ]
+  },
+  {
+    "slug": "sample-two",
+    "name": "Sample Project Two",
+    "tagline": "Another placeholder project.",
+    "description": "Placeholder description for the second project. Replace every field of this entry in src/data/projects.json with your own.",
+    "features": [
+      "Placeholder feature one",
+      "Placeholder feature two",
+      "Placeholder feature three"
+    ],
+    "year": "2025",
+    "role": "UX & UI",
+    "stack": ["Research", "Prototyping"],
+    "links": [{ "label": "CASE STUDY", "url": "https://example.com" }],
+    "hero": { "src": "projects/sample-two/hero.svg", "alt": "Sample Project Two — main preview" },
+    "gallery": [
+      { "src": "projects/sample-two/shot-1.svg", "alt": "Diagram 1" },
+      { "src": "projects/sample-two/shot-2.svg", "alt": "Diagram 2" },
+      { "src": "projects/sample-two/shot-3.svg", "alt": "Diagram 3" }
+    ]
+  },
+  {
+    "slug": "sample-three",
+    "name": "Sample Project Three",
+    "tagline": "A third placeholder, with fewer images.",
+    "description": "Placeholder description for the third project. A project can have 0 to 4 gallery images; the layout adapts.",
+    "features": ["Placeholder feature one", "Placeholder feature two"],
+    "year": "2024",
+    "role": "Design",
+    "stack": [],
+    "links": [],
+    "hero": { "src": "projects/sample-three/hero.svg", "alt": "Sample Project Three — main preview" },
+    "gallery": [
+      { "src": "projects/sample-three/shot-1.svg", "alt": "Screenshot 1" },
+      { "src": "projects/sample-three/shot-2.svg", "alt": "Screenshot 2" }
+    ]
+  }
+]

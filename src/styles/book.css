@@ -1,0 +1,327 @@
+/* ============================================================
+   Portfolio Book — scroll-driven flow
+   Act 1: street scene, doors swing open, camera pushes through
+   Act 2: book flies in tilted, straightens, opens, pages turn
+   All motion is CSS scroll-driven animation bound to --s.
+   ============================================================ */
+
+:root{
+  --ink:#060606;
+  --paper:#EFE9DC;
+  --paper-2:#E6DFCF;
+  --red:#C8102E;
+  --red-deep:#8C1F18;
+  --door:#2F4B4B;
+  --text:#2A2723;
+  --u:6.6vh; /* one "scroll unit" = 1% of the original 660vh scroll run; every range below is in these */
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; height:100%; }
+body{
+  background:var(--ink); overflow:hidden; color:var(--paper);
+  font-family:'Archivo',system-ui,sans-serif;
+}
+
+/* the one scroll container every animation is timed against */
+.scroller{ height:100vh; overflow-y:auto; overflow-x:hidden; scroll-timeline:--s block; }
+.track{ height:calc(100vh + var(--total,100) * var(--u)); position:relative; } /* --total set from the page count */
+.stage{ position:sticky; top:0; height:100vh; overflow:hidden; background:var(--ink); }
+
+/* ============================================================
+   ACT 1 — STREET SCENE
+   ============================================================ */
+.hero{
+  position:absolute; inset:0; z-index:30; perspective:1200px; transform-origin:50% 56%;
+  animation:heroPush 1ms linear both; animation-timeline:--s; animation-range:calc(9 * var(--u)) calc(24 * var(--u));
+}
+@keyframes heroPush{
+  0%{   opacity:1; transform:scale(1); }
+  60%{  opacity:1; transform:scale(1.7); }
+  100%{ opacity:0; transform:scale(2.9); visibility:hidden; } /* hidden at the end so it stops eating clicks */
+}
+
+.sky{ position:absolute; inset:0;
+  background:linear-gradient(180deg,#2E7FC2 0%,#5EA6D8 42%,#9CC9E6 68%,#D9C9A8 100%); }
+
+.skyline{ position:absolute; left:0; right:0; bottom:26%; height:46%; }
+.skyline i{ position:absolute; bottom:0; display:block; border-radius:2px 2px 0 0;
+  box-shadow:inset 0 -18px 30px rgba(0,0,0,.12); }
+
+.frond{ position:absolute; bottom:12%; width:22vw; max-width:280px; opacity:.95; }
+.frond-r{ right:-3vw; transform:rotate(6deg); }
+.frond-l{ left:-4vw; transform:rotate(-8deg) scaleX(-1); width:17vw; }
+
+/* shop facade */
+.facade{
+  position:absolute; left:50%; bottom:20%; transform:translateX(-50%);
+  width:min(620px,52vw); height:58vh; background:linear-gradient(180deg,#D8232A,#B81B22);
+  box-shadow:0 30px 60px rgba(0,0,0,.35), inset 0 0 90px rgba(0,0,0,.18);
+}
+.awning{ position:absolute; left:-4%; right:-4%; top:14%; height:26px;
+  background:linear-gradient(180deg,#F1E2C6,#CDB893); box-shadow:0 8px 16px rgba(0,0,0,.3); }
+.awning span{ position:absolute; left:0; right:0; bottom:-9px; height:10px;
+  background:repeating-linear-gradient(90deg,#CDB893 0 14px,transparent 14px 28px); }
+
+.poster{
+  position:absolute; right:6%; top:34%; width:34%; padding:10px 11px;
+  background:#F4F1E8; color:#22201C; box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.poster-kicker{ font-family:'IBM Plex Mono',monospace; font-size:5.5px; letter-spacing:.14em; opacity:.6; }
+.poster-title{ margin-top:12px; font-size:11px; font-weight:800; line-height:1.15; }
+.poster-ring{ position:absolute; right:12%; top:34%; width:34%; aspect-ratio:1;
+  border:1.5px solid var(--red); border-radius:50%; border-left-color:transparent; }
+.poster-foot{ margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:4.5px;
+  letter-spacing:.1em; opacity:.55; line-height:1.5; }
+
+.doorway{
+  position:absolute; left:8%; bottom:0; width:46%; height:66%;
+  background:#070707; transform-style:preserve-3d;
+  box-shadow:0 0 0 9px #8C1F18, 0 0 0 11px rgba(0,0,0,.35), inset 0 0 40px rgba(0,0,0,.9);
+}
+.door{
+  position:absolute; top:0; height:100%; width:50%;
+  background:linear-gradient(100deg,#365656,#2A4444 55%,#1D3131);
+  border:1px solid rgba(0,0,0,.45);
+}
+.door::before{ content:''; position:absolute; inset:9px; border:1px solid rgba(255,255,255,.08); }
+.door::after{ content:''; position:absolute; left:9px; right:9px; top:16%; height:22%;
+  border:1px solid rgba(255,255,255,.06); }
+.door-l{ left:0;  transform-origin:left center;
+  animation:doorL 1ms linear both; animation-timeline:--s; animation-range:calc(9 * var(--u)) calc(21 * var(--u)); }
+.door-r{ right:0; transform-origin:right center;
+  animation:doorR 1ms linear both; animation-timeline:--s; animation-range:calc(9 * var(--u)) calc(21 * var(--u)); }
+@keyframes doorL{ 0%{transform:rotateY(0)} 100%{transform:rotateY(-118deg)} }
+@keyframes doorR{ 0%{transform:rotateY(0)} 100%{transform:rotateY(118deg)} }
+.door-label{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.16em;
+  color:rgba(239,233,220,.72); white-space:nowrap; }
+.handle{ position:absolute; top:50%; width:4px; height:46px; border-radius:3px;
+  background:linear-gradient(180deg,#CDB98A,#8A7647); transform:translateY(-50%); }
+.door-l .handle{ right:7px; }
+.door-r .handle{ left:7px; }
+
+.step{ position:absolute; left:-3%; right:-3%; bottom:-14px; height:14px;
+  background:linear-gradient(180deg,#E7D9BC,#C3B393); }
+
+.stall{ position:absolute; left:8%; bottom:19%; width:15vw; height:7vh;
+  background:linear-gradient(180deg,#C8A46C,#9C7C4C); box-shadow:0 10px 18px rgba(0,0,0,.3); }
+.crate{ position:absolute; bottom:15%; width:52px; height:36px; background:#2F6FA8;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.15); }
+
+/* flat silhouettes, kept clear of the facade footprint */
+.folk{ position:absolute; bottom:19%; width:46px; height:15vh; }
+.folk .head{ position:absolute; top:0; left:50%; width:22px; height:22px; margin-left:-11px;
+  border-radius:50%; background:#2B2320; }
+.folk .body{ position:absolute; top:20px; left:0; right:0; bottom:0;
+  border-radius:22px 22px 4px 4px; }
+.folk-a{ left:9%; }
+.folk-a .body{ background:#DCD6C8; }
+.folk-b{ right:11%; height:12vh; }
+.folk-b .body{ background:#E9E3D6; }
+.folk-b .arm{ position:absolute; top:44%; left:70%; width:30px; height:7px; border-radius:4px;
+  background:#E9E3D6; transform:rotate(-8deg); }
+.seat{ position:absolute; right:10%; bottom:18%; width:58px; height:7vh;
+  background:#C0392F; border-radius:3px 3px 0 0; box-shadow:0 8px 14px rgba(0,0,0,.28); }
+
+.road{ position:absolute; left:0; right:0; bottom:0; height:20%;
+  background:linear-gradient(180deg,#6B5A4A,#4A3E33); }
+.hero-scrim{ position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.30),rgba(0,0,0,0) 34%,rgba(0,0,0,.62)); }
+
+.hero-time{ position:absolute; top:26px; left:34px; font-family:'IBM Plex Mono',monospace;
+  font-size:13px; letter-spacing:.12em; }
+.hero-copy{ position:absolute; left:34px; bottom:44px; max-width:52vw; }
+.hero-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.22em; opacity:.85; }
+.hero-title{ margin:10px 0 0; font-size:clamp(34px,5.2vw,64px); font-weight:400; line-height:1.02;
+  letter-spacing:.01em; color:#fff; text-shadow:0 2px 24px rgba(0,0,0,.45); }
+.scroll-hint{ position:absolute; left:50%; bottom:30px; transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.2em; color:rgba(255,255,255,.85);
+  animation:fadeOut 1ms linear both; animation-timeline:--s; animation-range:calc(0 * var(--u)) calc(7 * var(--u)); }
+@keyframes fadeOut{ from{opacity:.9} to{opacity:0} }
+
+/* ============================================================
+   ACT 2 — BOOK
+   ============================================================ */
+.scene{
+  position:absolute; inset:0; z-index:10; display:flex; align-items:center; justify-content:center;
+  perspective:2600px; perspective-origin:50% 45%; opacity:0;
+  animation:fadeIn 1ms linear both, sceneZoom 1ms linear both;
+  animation-timeline:--s,--s; animation-range:calc(18 * var(--u)) calc(27 * var(--u)), calc(50 * var(--u)) calc(72 * var(--u));
+}
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+@keyframes sceneZoom{ from{transform:scale(1)} to{transform:scale(1.16)} }
+
+.book{
+  --bw:min(780px,86vw,91vh); --px:calc(var(--bw) / 780); /* --px = 1px at full size; all page type scales with the book */
+  position:relative; width:var(--bw); aspect-ratio:780 / 548; transform-style:preserve-3d;
+  animation:bookMove 1ms linear both; animation-timeline:--s; animation-range:calc(18 * var(--u)) calc(48 * var(--u));
+}
+@keyframes bookMove{
+  0%{   transform:translateX(-25%) translateY(6%) scale(.48) rotateX(16deg) rotateY(-28deg); }
+  38%{  transform:translateX(-25%) translateY(2%) scale(.84) rotateX(8deg)  rotateY(-15deg); }
+  56%{  transform:translateX(-25%) translateY(0)  scale(.92) rotateX(0deg)  rotateY(0deg); }
+  100%{ transform:translateX(0)    translateY(0)  scale(1)   rotateX(0deg)  rotateY(0deg); }
+}
+.book::after{ content:''; position:absolute; left:4%; right:4%; bottom:-30px; height:44px;
+  background:rgba(0,0,0,.72); filter:blur(28px); transform:translateZ(-40px); }
+
+.left-page{
+  position:absolute; top:0; left:0; width:50%; height:100%;
+  background:linear-gradient(90deg,var(--paper-2),var(--paper) 22%);
+  box-shadow:inset -22px 0 30px -18px rgba(0,0,0,.45); opacity:0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(34 * var(--u)) calc(39 * var(--u));
+}
+/* binding shadow down the middle, sits above the flat pages */
+.gutter{
+  position:absolute; top:0; left:50%; width:44px; height:100%; margin-left:-22px; z-index:calc(12 + var(--L));
+  pointer-events:none; opacity:0;
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.34) 45%,rgba(0,0,0,.34) 55%,rgba(0,0,0,0));
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(36 * var(--u)) calc(44 * var(--u));
+}
+.page-edges{
+  position:absolute; top:6px; bottom:6px; left:100%; width:7px; z-index:calc(11 + var(--L)); opacity:0;
+  background:repeating-linear-gradient(180deg,#DCD5C4 0 2px,#C7BFAC 2px 3px);
+  border-radius:0 2px 2px 0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(40 * var(--u)) calc(48 * var(--u));
+}
+
+.leaf{
+  position:absolute; top:0; left:50%; width:50%; height:100%;
+  transform-origin:left center; transform-style:preserve-3d;
+}
+.face{
+  position:absolute; inset:0; backface-visibility:hidden; overflow:hidden;
+  background:var(--paper); padding:calc(var(--px)*30) calc(var(--px)*32);
+}
+.face.front{ box-shadow:inset 20px 0 28px -18px rgba(0,0,0,.30); }
+.face.back{ transform:rotateY(180deg); box-shadow:inset -20px 0 28px -18px rgba(0,0,0,.40); }
+
+/* sweeping shade that makes a turning page read as paper catching light */
+.shade{
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,.12) 38%,rgba(255,255,255,.14) 78%,rgba(255,255,255,.22));
+}
+.shade-b{ background:linear-gradient(270deg,rgba(0,0,0,.42),rgba(0,0,0,.12) 38%,rgba(255,255,255,.12) 80%,rgba(255,255,255,.2)); }
+
+/* final static page under the stack — after .face so it keeps its half-width */
+.book > .base-right{
+  position:absolute; inset:auto; top:0; left:50%; width:50%; height:100%;
+  background:var(--paper); padding:calc(var(--px)*30) calc(var(--px)*32); overflow:hidden;
+  box-shadow:inset 20px 0 28px -18px rgba(0,0,0,.32);
+}
+
+/* --- the turns. angles are fanned so flipped pages stack front-to-back ---
+   Every leaf carries its own numbers (set in Book.astro from the page count):
+   --a/--b   scroll units it turns over
+   --tz0/--tz1 depth in the right-hand stack (first page on top) / in the left-hand stack (last page on top)
+   --z0/--z1 z-index before/after the turn   --end  final angle (fanned) */
+.leaf{
+  z-index:var(--z0);
+  animation:flip 1ms linear both; animation-timeline:--s;
+  animation-range:calc(var(--a) * var(--u)) calc(var(--b) * var(--u));
+}
+/* eased angle distribution: slow lift, quick middle, soft settle */
+@keyframes flip{
+  0%{   transform:translateZ(var(--tz0)) rotateY(0deg);      z-index:var(--z0); }
+  18%{  transform:translateZ(var(--tz0)) rotateY(-22deg); }
+  50%{  transform:translateZ(var(--tz0)) rotateY(-92deg);    z-index:var(--z1); }
+  82%{  transform:translateZ(var(--tz0)) rotateY(-158deg); }
+  100%{ transform:translateZ(var(--tz1)) rotateY(var(--end)); z-index:var(--z1); }
+}
+/* shade rises as the page stands up, falls as it lands */
+.leaf .shade{
+  animation:shadeSweep 1ms linear both; animation-timeline:--s;
+  animation-range:calc(var(--a) * var(--u)) calc(var(--b) * var(--u));
+}
+@keyframes shadeSweep{
+  0%{ opacity:0; }
+  50%{ opacity:.85; }
+  100%{ opacity:0; }
+}
+
+/* static mode (no scroll-driven animation / reduced motion): main.js sets .is-static and marks .is-flipped */
+.is-static .track{ height:100vh; }
+.is-static .leaf,.is-static .leaf .shade{ animation:none; }
+.is-static .leaf .shade{ display:none; }
+.is-static .leaf.is-flipped{ transform:translateZ(var(--tz1)) rotateY(var(--end)); z-index:var(--z1); }
+
+/* --- cover artwork --- */
+.cover-front{
+  background:linear-gradient(115deg,#D4121F,#B60E1B 60%,#9E0C17);
+  padding:calc(var(--px)*34) calc(var(--px)*36); color:#FFF3E4;
+  box-shadow:inset 28px 0 44px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(0,0,0,.3);
+}
+.cover-front .spine{ position:absolute; top:0; left:0; width:16px; height:100%;
+  background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0)); }
+.cover-front .edge{ position:absolute; top:0; right:0; width:6px; height:100%;
+  background:linear-gradient(90deg,rgba(255,255,255,.2),rgba(255,255,255,.6)); }
+.cover-kicker{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*11); letter-spacing:.2em; font-weight:500; }
+.cover-sub{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*11); letter-spacing:.2em; margin-top:calc(var(--px)*26); }
+.cover-name{ margin:calc(var(--px)*8) 0 0; font-size:calc(var(--px)*50); font-weight:800; line-height:.95; letter-spacing:-.01em; color:#150406; text-transform:uppercase; }
+.cover-tag{ margin:calc(var(--px)*14) 0 0; font-size:calc(var(--px)*14); line-height:1.35; max-width:82%; font-weight:600; }
+.cover-index{ position:absolute; left:calc(var(--px)*36); right:calc(var(--px)*36); bottom:calc(var(--px)*36); }
+.cover-index h4{ margin:0 0 calc(var(--px)*12); font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5);
+  letter-spacing:.2em; font-weight:500; border-bottom:1px solid rgba(255,243,228,.5); padding-bottom:calc(var(--px)*8); }
+.idx-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:calc(var(--px)*10) calc(var(--px)*18); }
+.idx-grid b{ display:block; font-size:calc(var(--px)*13); font-weight:700; }
+.idx-grid span{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); }
+.idx-no{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); font-style:normal; }
+
+/* ============================================================
+   CHROME — side icons, gauge, brand
+   ============================================================ */
+.icons{ position:absolute; inset:0; z-index:12; pointer-events:none; opacity:0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(23 * var(--u)) calc(32 * var(--u)); }
+.icon{ position:absolute; width:150px; text-align:center; color:var(--paper); opacity:.8; }
+.icon svg{ width:74px; height:74px; }
+.icon span{ display:block; margin-top:8px; font-family:'IBM Plex Mono',monospace;
+  font-size:9px; letter-spacing:.16em; }
+.ic-1{ left:5vw;  top:24%; }
+.ic-2{ left:5vw;  bottom:16%; }
+.ic-3{ right:5vw; top:24%; }
+.ic-4{ right:5vw; bottom:16%; }
+
+.gauge{ position:absolute; left:30px; top:50%; transform:translateY(-50%); z-index:14;
+  display:flex; align-items:center; gap:10px; opacity:0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(19 * var(--u)) calc(28 * var(--u)); }
+.ticks{ position:relative; width:22px; height:260px; }
+.ticks i{ position:absolute; left:0; height:1px; background:rgba(239,233,220,.32); }
+.gauge-fill{ position:absolute; left:0; top:0; width:22px; overflow:hidden; height:0;
+  animation:fillUp 1ms linear both; animation-timeline:--s; animation-range:calc(20 * var(--u)) 100%; }
+@keyframes fillUp{ from{height:0} to{height:100%} }
+.gauge-fill i{ background:var(--red); }
+.gauge-num{ font-family:'IBM Plex Mono',monospace; font-size:11px; min-width:34px; }
+.gauge-num b{ color:var(--red); font-weight:400; }
+
+.brand{ position:absolute; left:34px; top:28px; z-index:14; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; letter-spacing:.2em; opacity:0;
+  animation:fadeIn 1ms linear both; animation-timeline:--s; animation-range:calc(19 * var(--u)) calc(28 * var(--u)); }
+
+/* ============================================================
+   FALLBACKS
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  .hero{ animation:none !important; opacity:0; }
+  .door-l,.door-r{ animation:none !important; }
+  .scene{ animation:none !important; opacity:1; transform:none !important; }
+  .book{ animation:none !important; transform:none !important; }
+  .leaf,.leaf .shade{ animation:none !important; }
+  .left-page,.gutter,.page-edges,.icons,.gauge,.brand{ animation:none !important; opacity:1; }
+  .gauge-fill{ animation:none !important; height:100%; }
+}
+
+/* browsers without scroll-driven animations: show the book open, skip the choreography */
+@supports not (animation-timeline: scroll()){
+  .hero{ opacity:0; }
+  .scene{ opacity:1; }
+  .book{ transform:none; }
+  .left-page,.gutter,.page-edges,.icons,.gauge,.brand{ opacity:1; }
+}
+
+@media (max-width:760px){
+  .icons{ display:none; }
+  .gauge{ left:12px; }
+  .facade{ width:74vw; }
+  .hero-copy{ left:20px; max-width:80vw; }
+}

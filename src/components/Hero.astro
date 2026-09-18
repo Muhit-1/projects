@@ -1,0 +1,93 @@
+---
+import { site, asset } from '../lib/data';
+
+const { hero, facade, scene } = site;
+const props = (scene.props ?? []) as Array<{
+  src: string; alt?: string; layer?: 'back' | 'front';
+  left?: string; right?: string; bottom?: string; top?: string; width?: string;
+}>;
+const back = props.filter((p) => p.layer !== 'front');
+const front = props.filter((p) => p.layer === 'front');
+const propStyle = (p: (typeof props)[number]) =>
+  [p.left && `left:${p.left}`, p.right && `right:${p.right}`, p.top && `top:${p.top}`,
+   p.bottom && `bottom:${p.bottom}`, p.width && `width:${p.width}`].filter(Boolean).join(';');
+const placeholders = scene.showPlaceholderScenery;
+---
+<!-- ============ ACT 1 — STREET SCENE + DOORS ============ -->
+<div class="hero">
+  <div class="sky"></div>
+  {placeholders && (
+    <div class="skyline">
+      <i style="left:2%;  width:12%; height:46%; background:#B9695C"></i>
+      <i style="left:13%; width:9%;  height:58%; background:#A85B50"></i>
+      <i style="left:21%; width:14%; height:38%; background:#C4776A"></i>
+      <i style="left:62%; width:11%; height:52%; background:#B9695C"></i>
+      <i style="left:72%; width:15%; height:42%; background:#A85B50"></i>
+      <i style="left:86%; width:13%; height:56%; background:#C4776A"></i>
+    </div>
+  )}
+
+  {back.map((p) => <img class="prop" src={asset(p.src)} alt={p.alt ?? ''} style={propStyle(p)} />)}
+
+  {placeholders && (<>
+    <!-- fronds -->
+    <svg class="frond frond-r" viewBox="0 0 200 320" aria-hidden="true">
+      <g fill="#2F6B43">
+        <path d="M100 320 C96 220 92 140 96 40 l8 0 C108 140 104 220 104 320z"/>
+        <path d="M98 60 C60 40 30 46 6 68 36 74 70 78 98 78z"/>
+        <path d="M102 60 C140 40 170 46 194 68 164 74 130 78 102 78z"/>
+        <path d="M98 110 C62 92 34 98 12 118 40 124 72 128 98 128z"/>
+        <path d="M102 110 C138 92 166 98 188 118 160 124 128 128 102 128z"/>
+        <path d="M98 162 C66 146 40 152 20 170 46 176 74 180 98 180z"/>
+        <path d="M102 162 C134 146 160 152 180 170 154 176 126 180 102 180z"/>
+      </g>
+    </svg>
+    <svg class="frond frond-l" viewBox="0 0 200 320" aria-hidden="true">
+      <g fill="#26583A">
+        <path d="M100 320 C96 220 92 140 96 40 l8 0 C108 140 104 220 104 320z"/>
+        <path d="M98 70 C60 50 30 56 6 78 36 84 70 88 98 88z"/>
+        <path d="M102 70 C140 50 170 56 194 78 164 84 130 88 102 88z"/>
+        <path d="M98 130 C62 112 34 118 12 138 40 144 72 148 98 148z"/>
+        <path d="M102 130 C138 112 166 118 188 138 160 144 128 148 102 148z"/>
+      </g>
+    </svg>
+  </>)}
+
+  <!-- shop facade -->
+  <div class="facade">
+    <div class="awning"><span></span></div>
+    <div class="poster">
+      <div class="poster-kicker">{facade.posterKicker}</div>
+      <div class="poster-title">{facade.posterTitle[0]}<br>{facade.posterTitle[1]}</div>
+      <div class="poster-ring"></div>
+      <div class="poster-foot">{facade.posterFoot}</div>
+    </div>
+    <div class="doorway">
+      <div class="door door-l"><span class="door-label">{facade.doorLabel}</span><i class="handle"></i></div>
+      <div class="door door-r"><span class="door-label">{facade.doorLabel}</span><i class="handle"></i></div>
+    </div>
+    <div class="step"></div>
+  </div>
+
+  {placeholders && (<>
+    <!-- street furniture / silhouettes -->
+    <div class="stall"></div>
+    <div class="crate" style="left:80%"></div>
+    <div class="crate" style="left:85%; bottom:14%"></div>
+    <div class="folk folk-a"><i class="head"></i><i class="body"></i></div>
+    <div class="folk folk-b"><i class="head"></i><i class="body"></i><i class="arm"></i></div>
+    <div class="seat"></div>
+  </>)}
+
+  {front.map((p) => <img class="prop" src={asset(p.src)} alt={p.alt ?? ''} style={propStyle(p)} />)}
+
+  <div class="road"></div>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-time">{hero.time}</div>
+  <div class="hero-copy">
+    <div class="hero-eyebrow">{hero.eyebrow}</div>
+    <h1 class="hero-title">{hero.title[0]}<br>{hero.title[1]}</h1>
+  </div>
+  <div class="scroll-hint">{hero.scrollHint}</div>
+</div>

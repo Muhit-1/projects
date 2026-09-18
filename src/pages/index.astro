@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Chrome from '../components/Chrome.astro';
+import Book from '../components/Book.astro';
+import { projects, buildTimeline } from '../lib/data';
+
+const { total, L } = buildTimeline(projects.length);
+---
+<Base>
+  <div class="scroller" data-units={total} data-leaves={L}>
+    <div class="track" style={`--total:${total}`}>
+      <div class="stage">
+        <Hero />
+        <Chrome />
+        <Book />
+        <div class="book-nav">
+          <button type="button" data-nav="-1">← PREV</button>
+          <button type="button" data-nav="1">NEXT →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

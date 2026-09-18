@@ -1,0 +1,26 @@
+---
+// brand mark, side skill icons and the scroll gauge (the gauge ticks/percent are filled by main.js)
+import { site, asset } from '../lib/data';
+
+const svgs = import.meta.glob('../assets/icons/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const icons = (site.icons as Array<{ label: string; icon?: string; src?: string }>).slice(0, 4).map((i, n) => ({
+  ...i,
+  n: n + 1,
+  svg: i.icon ? svgs[`../assets/icons/${i.icon}.svg`] : undefined,
+}));
+---
+<div class="brand">{site.name.toUpperCase()}</div>
+
+<div class="icons" aria-hidden="true">
+  {icons.map((i) => (
+    <div class={`icon ic-${i.n}`}>
+      {i.svg ? <Fragment set:html={i.svg} /> : <img src={asset(i.src)} alt="" width="74" height="74" />}
+      <span>{i.label}</span>
+    </div>
+  ))}
+</div>
+
+<div class="gauge">
+  <div class="ticks" id="ticks"></div>
+  <div class="gauge-num"><span id="pct">0</span><b>%</b></div>
+</div>
