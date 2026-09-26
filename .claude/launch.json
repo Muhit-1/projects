@@ -1,7 +1,0 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    { "name": "astro-dev", "runtimeExecutable": "npx", "runtimeArgs": ["astro", "dev", "--port", "4321"], "port": 4321 },
-    { "name": "original", "runtimeExecutable": "python", "runtimeArgs": ["-m", "http.server", "8001", "--directory", "Portfolio Book"], "port": 8001 }
-  ]
-}
