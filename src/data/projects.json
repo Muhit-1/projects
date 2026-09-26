@@ -1,65 +1,514 @@
 [
   {
-    "slug": "sample-one",
-    "name": "Sample Project One",
-    "tagline": "A short one-line pitch for this project.",
-    "description": "Placeholder description. Say what the project is, who it is for and what problem it solves. Two to four sentences fits the page comfortably.",
+    "slug": "portfolio",
+    "name": "Portfolio Website",
+    "tagline": "Personal site for a backend-focused full-stack developer.",
+    "description": "My personal portfolio site — a hero, about, work, experience and contact section covering freelance work at SAMTrek, my day-to-day stack, and how to reach me.",
     "features": [
-      "First key feature, in one short line",
-      "Second key feature, in one short line",
-      "Third key feature, in one short line",
-      "Fourth key feature, in one short line"
+      "Dark/light theme toggle with a CV download call-to-action",
+      "About section describing freelance work and stack (Node.js, NestJS, TypeScript, React, Coolify)",
+      "Work/projects showcase grid linking out to this projects page",
+      "Experience \"logbook\" for career history and education",
+      "Postcard-style contact section with email, phone, GitHub and LinkedIn",
+      "Dock-style navigation bar with an embedded lofi music player"
     ],
     "year": "2026",
-    "role": "Design & build",
-    "stack": ["Figma", "Astro", "TypeScript"],
-    "links": [
-      { "label": "LIVE DEMO", "url": "https://example.com" },
-      { "label": "SOURCE", "url": "https://github.com/Muhit-1" }
-    ],
-    "hero": { "src": "projects/sample-one/hero.svg", "alt": "Sample Project One — main preview" },
+    "role": "Full-stack development",
+    "stack": ["Vite", "GSAP", "JavaScript", "CSS", "HTML"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/portfolio" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/portfolio/main/public/img/hero-color.png", "alt": "Portfolio — light theme hero" },
     "gallery": [
-      { "src": "projects/sample-one/shot-1.svg", "alt": "Screenshot 1", "caption": "Screenshot 1 — caption shown when enlarged" },
-      { "src": "projects/sample-one/shot-2.svg", "alt": "Screenshot 2", "caption": "Screenshot 2" },
-      { "src": "projects/sample-one/shot-3.svg", "alt": "Screenshot 3", "caption": "Screenshot 3" },
-      { "src": "projects/sample-one/shot-4.svg", "alt": "Screenshot 4", "caption": "Screenshot 4" }
+      { "src": "https://raw.githubusercontent.com/Muhit-1/portfolio/main/public/img/hero-dark.png", "alt": "Dark theme hero" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/portfolio/main/public/img/heropic.png", "alt": "Hero portrait" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/portfolio/main/public/img/contact-photo.png", "alt": "Contact section" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/portfolio/main/public/img/tv.png", "alt": "TV prop detail" }
     ]
   },
   {
-    "slug": "sample-two",
-    "name": "Sample Project Two",
-    "tagline": "Another placeholder project.",
-    "description": "Placeholder description for the second project. Replace every field of this entry in src/data/projects.json with your own.",
+    "slug": "accounting-tool-web",
+    "name": "Accounting Tool — Web",
+    "tagline": "React/TypeScript frontend for a multi-business accounting tool.",
+    "description": "The frontend for a multi-business accounting tool: a React + TypeScript single-page app that talks only to the accounting-api backend over HTTPS, letting one owner manage several small businesses from a single account.",
     "features": [
-      "Placeholder feature one",
-      "Placeholder feature two",
-      "Placeholder feature three"
+      "\"Workspace\" themed dark sidebar app shell UI",
+      "Dashboard, Accounts, Invoices, Reports, Sharing and Settings routes",
+      "Auth state managed via AuthProvider with JWT persisted in localStorage",
+      "TanStack Query hooks organized by API resource, typed against the API",
+      "Supports multi-currency bookkeeping, invoicing, reporting and sharing"
+    ],
+    "year": "2026",
+    "role": "Frontend development",
+    "stack": ["TypeScript", "React 19", "Vite", "Tailwind CSS v4", "React Router", "TanStack Query"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Accounting-Tool-web" }],
+    "hero": { "src": "projects/accounting-tool-web/hero.svg", "alt": "Accounting Tool Web — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "accounting-tool-api",
+    "name": "Accounting Tool — API",
+    "tagline": "NestJS/Prisma backend for a multi-business bookkeeping and invoicing system.",
+    "description": "Backend API for the Multi-Business Accounting Tool: bookkeeping, invoicing and reporting for several small businesses under one owner account, with OCR-assisted invoice import and encrypted, sharable access.",
+    "features": [
+      "Multi-business bookkeeping with categorized accounts, transactions and running balances",
+      "Invoice PDF generation/editing plus scan-to-prefill via OCR fallback",
+      "Date-range and cost-tracking reports/dashboards with PDF export",
+      "Role-based sharing via time-limited, business- or table-scoped access grants",
+      "Security hardening: AES-256-GCM field encryption, rate limiting, sandboxed PDF rendering"
+    ],
+    "year": "2026",
+    "role": "Backend development",
+    "stack": ["TypeScript", "NestJS 12", "Prisma 7", "MySQL/MariaDB", "Puppeteer", "tesseract.js", "JWT"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Accounting-Tool-api" }],
+    "hero": { "src": "projects/accounting-tool-api/hero.svg", "alt": "Accounting Tool API — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "crisis-compass",
+    "name": "Crisis Compass",
+    "tagline": "Real-time interactive world map of active natural events.",
+    "description": "An interactive world map visualizing active natural events in real time — wildfires, volcanoes, storms, floods, earthquakes, sea/lake ice and dust & haze — layered with live weather and hazard feeds.",
+    "features": [
+      "Six weather layers: wind, temperature, rain, clouds, gusts and storm energy",
+      "Scrubbable ~7-day timeline (historical through forecast) at hourly resolution",
+      "Live hazard feeds from USGS earthquakes, NASA EONET and GDACS disaster alerts",
+      "Point-click forecasting with meteograms and unit switching",
+      "Shareable URLs that encode the entire view state",
+      "No authentication required — all data sources are free"
+    ],
+    "year": "2026",
+    "role": "Full-stack development",
+    "stack": ["Svelte 5", "TypeScript", "MapLibre GL JS", "Tailwind CSS", "Vite"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Crisis-Compass" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/Crisis-Compass/main/docs/screenshots/01-default-view.png", "alt": "Crisis Compass — default view" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/Crisis-Compass/main/docs/screenshots/02-hazards.png", "alt": "Live hazard feeds" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/Crisis-Compass/main/docs/screenshots/03-wind-layer.png", "alt": "Wind layer" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/Crisis-Compass/main/docs/screenshots/04-temperature-layer.png", "alt": "Temperature layer" }
+    ]
+  },
+  {
+    "slug": "over-and-out",
+    "name": "Over and Out",
+    "tagline": "Browser-based walkie-talkie over WebRTC.",
+    "description": "A browser-based walkie-talkie using WebRTC audio and WebSocket signaling. Tune into a 5-digit \"frequency\" and talk push-to-talk or full-duplex with up to 8 people, peer-to-peer.",
+    "features": [
+      "Push-to-talk or full-duplex (open-mic) transmission modes",
+      "5-digit tunable frequencies with up to 8 users per channel",
+      "Peer-to-peer mesh connections between all channel participants",
+      "Perfect-negotiation-based handling of simultaneous connection offers",
+      "Visual indicator knobs for transmission and channel-occupied status",
+      "60-second transmission timeout via 15-second server pings to prevent stuck channels"
+    ],
+    "year": "2026",
+    "role": "Full-stack development",
+    "stack": ["Node.js", "TypeScript", "WebRTC", "WebSocket"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/over-and-out" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/over-and-out/main/docs/screenshots/01-tune-in.png", "alt": "Over and Out — tune in" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/over-and-out/main/docs/screenshots/02-push-to-talk.png", "alt": "Push-to-talk mode" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/over-and-out/main/docs/screenshots/03-duplex.png", "alt": "Full-duplex mode" }
+    ]
+  },
+  {
+    "slug": "game-board",
+    "name": "Game Board",
+    "tagline": "Digital score-tracking board for in-person game nights.",
+    "description": "A digital board/score-tracking platform built for casual in-person gaming sessions with family and friends, replacing paper-and-scraps board setups — starting with Catan.",
+    "features": [
+      "Interactive on-screen board and automated score tracker for Catan game nights",
+      "Players use real physical cards/dice while the tool handles board visualization",
+      "Hub page to pick a game and set player count before starting",
+      "No installation or registration required — runs entirely in the browser",
+      "Extensible `src/games/` structure to support more games later"
+    ],
+    "year": "2026",
+    "role": "Frontend development",
+    "stack": ["React 18", "TypeScript", "Vite", "Tailwind CSS"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/game-board" }],
+    "hero": { "src": "projects/game-board/hero.svg", "alt": "Game Board — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "opticonst",
+    "name": "OptiConst",
+    "tagline": "Client-side calculator for photophysical constants.",
+    "description": "A static, client-side calculator for photophysical quantities — Einstein A21/B12 coefficients, radiative/fluorescence lifetime, transition dipole moment, oscillator strength — derived from a molecule's absorbance and photoluminescence spectra.",
+    "features": [
+      "Ports photophysics calculations from four Jupyter notebooks into one browser tool",
+      "Fully client-side: uploaded spectra never leave the browser",
+      "Interactive spectrum charting via Plotly.js",
+      "CSV upload with parsing/validation",
+      "One-click PDF report generation",
+      "Test suite validates the TypeScript engine against notebook outputs to floating-point precision"
+    ],
+    "year": "2026",
+    "role": "Full-stack development",
+    "stack": ["Svelte 5", "TypeScript", "Vite", "Plotly.js", "PapaParse", "jsPDF"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/sam-trek/OptiConst" }],
+    "hero": { "src": "projects/opticonst/hero.svg", "alt": "OptiConst — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "music-player-api",
+    "name": "Music Player — API",
+    "tagline": "Express/MongoDB backend for a music player web app.",
+    "description": "Node.js/Express backend API for a music player web app, handling song storage, metadata, session-based authentication and audio file serving.",
+    "features": [
+      "Session-based auth with bcrypt password hashing and MongoDB-backed sessions",
+      "Signup/signin endpoints (disabled in the public read-only demo)",
+      "`/api/check-auth` endpoint to verify current auth status",
+      "`/api/songs` endpoint returning song metadata and file paths",
+      "Audio upload/seeding with metadata extraction via multer + music-metadata",
+      "Static audio file serving with CORS configured for a separate frontend"
+    ],
+    "year": "2026",
+    "role": "Backend development",
+    "stack": ["Node.js", "Express 5", "MongoDB", "Mongoose", "bcrypt", "multer"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Music-player-API" }],
+    "hero": { "src": "projects/music-player-api/hero.svg", "alt": "Music Player API — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "music-player-web",
+    "name": "Music Player — Web",
+    "tagline": "Multi-page vanilla JS front-end for streaming music.",
+    "description": "A multi-page front-end web music player with browsing, playlists and playback, built with vanilla HTML/CSS/JavaScript and paired with the Music Player API backend.",
+    "features": [
+      "Multiple browsing views: song list, albums, artists, genres, explore and history",
+      "Playlist and favorites list pages",
+      "Dedicated player page with HTML5 audio playback",
+      "Sign-up/sign-in pages for user accounts",
+      "Dynamically loads songs from a backend API and renders title/artist/album per track"
+    ],
+    "year": "2026",
+    "role": "Frontend development",
+    "stack": ["HTML", "CSS", "JavaScript"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Music-player-web" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/Music-player-web/main/pic/1.jpg", "alt": "Music Player Web — main view" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/Music-player-web/main/pic/2.webp", "alt": "Music Player Web — browsing view" }
+    ]
+  },
+  {
+    "slug": "workstationx",
+    "name": "WorkStationX",
+    "tagline": "Windows productivity app for developers and designers.",
+    "description": "A Windows desktop productivity app: one-click app/website workspaces, a task timer, screen capture tools and a year-long history of completed work, wrapped in a themeable WPF shell.",
+    "features": [
+      "Workspaces: launch a named set of apps/sites, with Chrome profile mapping and global shortcuts",
+      "Task timer: circular countdown against your own estimate, restart-durable with reminders",
+      "Screen tools: region/window capture with annotation, color picker, pixel ruler, always-on-top pinning",
+      "History page: year-long contribution grid of completed tasks with streaks",
+      "Eight live-swappable color themes plus CSV export and full JSON backup/restore"
+    ],
+    "year": "2026",
+    "role": "Desktop app development",
+    "stack": ["C#", "WPF", ".NET 10", "CommunityToolkit.Mvvm", "EF Core", "SQLite", "Serilog"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/WorkStationX" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/WorkStationX/main/docs/screenshots/workstation.png", "alt": "WorkStationX — workspace view" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/WorkStationX/main/docs/screenshots/task_timer-v3.png", "alt": "Task timer" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/WorkStationX/main/docs/screenshots/screen-tools.png", "alt": "Screen tools" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/WorkStationX/main/docs/screenshots/history.png", "alt": "History grid" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/WorkStationX/main/docs/screenshots/settings.png", "alt": "Settings" }
+    ]
+  },
+  {
+    "slug": "qr-generator",
+    "name": "QR Generator",
+    "tagline": "A free, fully client-side QR code generator.",
+    "description": "A free QR code generator supporting 15 QR types with heavy styling control — colors, module shapes, frames and logos — that never uploads anything to a server.",
+    "features": [
+      "15 QR types: URL, text, email, phone, SMS, contact card, Wi-Fi, location, social, calendar, payment and more",
+      "Custom foreground/background colors with a live contrast/scannability checker",
+      "Six module shapes with separate corner-ring/corner-center styling and optional center logo",
+      "Four frame styles with custom labels baked into the export",
+      "Export at 200–1200px in PNG, SVG or JPG with selectable error-correction level",
+      "Fully client-side — nothing uploaded to a server"
+    ],
+    "year": "2026",
+    "role": "Frontend development",
+    "stack": ["Next.js 14", "TypeScript", "Tailwind CSS", "qr-code-styling"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/qr_generator" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/qr_generator/main/docs/screenshot.png", "alt": "QR Generator — main screen" },
+    "gallery": []
+  },
+  {
+    "slug": "openplay",
+    "name": "OpenPlay",
+    "tagline": "Universal streaming front-end for any open HTTP directory server.",
+    "description": "A universal streaming front-end that works with any open HTTP directory server, matching files to TMDB metadata for a proper media-library browsing experience.",
+    "features": [
+      "Discovers every media library behind a single ISP portal address and checks server availability",
+      "Release-name parser extracts title/year/resolution/codec/audio and ranks TMDB matches",
+      "Unified search across TMDB metadata and the user's own server, plus actor/studio/director channels",
+      "Codec-aware playback that only warns when a file genuinely won't play, with a \"Play in VLC\" handoff",
+      "Custom video player with resume, watch history and a watchlist"
+    ],
+    "year": "2026",
+    "role": "Full-stack development",
+    "stack": ["React 19", "Vite 8", "React Router v7", "Tailwind CSS v4", "TMDB API", "Firebase", "Vercel"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/OpenPlay" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/OpenPlay/main/doc/home_ss.png", "alt": "OpenPlay — home view" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/OpenPlay/main/doc/setting_ss.png", "alt": "OpenPlay — settings" }
+    ]
+  },
+  {
+    "slug": "keyquest",
+    "name": "KeyQuest",
+    "tagline": "Typing and riddle game with a global leaderboard.",
+    "description": "A modern, responsive typing and riddle game: clear words to unlock a riddle, answer wrong and the run ends. Test your typing skills and logical thinking while chasing a personal best.",
+    "features": [
+      "Typing game where cleared words unlock a riddle; wrong answers end the run",
+      "Next-key hinting on an on-screen keycap deck alongside physical keyboard input",
+      "Configurable run length (30/45/60s presets or custom 10–600s) with bonus time for correct riddles",
+      "43 riddle sets drawn randomly per round for replay variety",
+      "Local top-10 leaderboard with personal-best tracking, stored client-side",
+      "Input sanitization and CSP security headers since the app has no backend"
+    ],
+    "year": "2026",
+    "role": "Frontend development",
+    "stack": ["React 18", "CSS", "Web Audio API"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/KeyQuest" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/KeyQuest/main/docs/screenshots/01-start.png", "alt": "KeyQuest — start screen" },
+    "gallery": [
+      { "src": "https://raw.githubusercontent.com/Muhit-1/KeyQuest/main/docs/screenshots/02-typing.png", "alt": "Typing gameplay" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/KeyQuest/main/docs/screenshots/03-riddle.png", "alt": "Riddle screen" },
+      { "src": "https://raw.githubusercontent.com/Muhit-1/KeyQuest/main/docs/screenshots/04-result.png", "alt": "Result screen" }
+    ]
+  },
+  {
+    "slug": "verso",
+    "name": "Verso",
+    "tagline": "A live wallpaper that's also a widget desk.",
+    "description": "A Windows live wallpaper engine that plays video, an image or an interactive web page as your desktop background, with small widget panels layered on top.",
+    "features": [
+      "Desktop background that plays video, an image, or an interactive web page",
+      "Widget panels (clock, task list, now-playing) rendered as web pages via a host bridge",
+      "Three-theme system defined purely through CSS token files",
+      "Runs below all windows while keeping desktop icons visible and clickable",
+      "Tasks persisted locally; pauses on fullscreen, lock, or low battery"
+    ],
+    "year": "2026",
+    "role": "Desktop app development",
+    "stack": ["C#", "WPF", ".NET 10", "WebView2", "CsWin32"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Verso" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/Verso/main/assets/verso.png", "alt": "Verso — live wallpaper preview" },
+    "gallery": []
+  },
+  {
+    "slug": "krishihat",
+    "name": "KrishiHat",
+    "tagline": "Marketplace platform for Bangladeshi farmers.",
+    "description": "A modern marketplace platform for Bangladeshi farmers, supporting both fixed-price listings and auctions with live commodity price tracking and bilingual UI.",
+    "features": [
+      "Multi-role system (super admin, admin, moderator, seller, buyer) with role-based dashboards",
+      "Dual marketplace: fixed-price product listings and auctions for verified sellers",
+      "Real-time market price tracking for agricultural commodities",
+      "Buyer-seller messaging and dispute resolution tools",
+      "Bilingual UI (English/Bengali) via a custom i18n dictionary",
+      "JWT auth with HTTP-only cookies and refresh-token rotation"
+    ],
+    "year": "2026",
+    "role": "Full-stack development",
+    "stack": ["Next.js 14", "React 18", "TypeScript", "Prisma", "MySQL/MariaDB", "Tailwind CSS"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/KrishiHat" }],
+    "hero": { "src": "https://raw.githubusercontent.com/Muhit-1/KrishiHat/main/public/hero_pic.gif", "alt": "KrishiHat — marketplace preview" },
+    "gallery": []
+  },
+  {
+    "slug": "space-war",
+    "name": "Space War",
+    "tagline": "A Space Invaders clone in Java Swing.",
+    "description": "A simple Space Invaders clone built with Java Swing, with alien waves that grow in difficulty over time.",
+    "features": [
+      "Ship movement and shooting",
+      "Alien waves that grow in difficulty over time",
+      "Basic game states (playing / game over)",
+      "Code organized using Command, State and Facade design patterns"
     ],
     "year": "2025",
-    "role": "UX & UI",
-    "stack": ["Research", "Prototyping"],
-    "links": [{ "label": "CASE STUDY", "url": "https://example.com" }],
-    "hero": { "src": "projects/sample-two/hero.svg", "alt": "Sample Project Two — main preview" },
+    "role": "Game development",
+    "stack": ["Java", "Java Swing"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Space-war" }],
+    "hero": { "src": "projects/space-war/hero.svg", "alt": "Space War — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "connect-4",
+    "name": "Connect 4",
+    "tagline": "Connect 4 in Java Swing with an AI opponent.",
+    "description": "A simple Connect 4 game implemented in Java with a Swing UI and a built-in AI opponent.",
+    "features": [
+      "Classic Connect 4 gameplay with a graphical Swing UI",
+      "Built-in AI opponent",
+      "Reset button to restart the game"
+    ],
+    "year": "2025",
+    "role": "Game development",
+    "stack": ["Java", "Java Swing"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Connect-4" }],
+    "hero": { "src": "projects/connect-4/hero.svg", "alt": "Connect 4 — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "nonograms",
+    "name": "NonoGrams",
+    "tagline": "Desktop app for playing, creating and solving Picross puzzles.",
+    "description": "A Java Swing desktop application for playing, creating and solving Nonogram (Picross) puzzles, with a dedicated solving mode.",
+    "features": [
+      "Play pre-made Nonogram (Picross) puzzles",
+      "Create custom puzzles",
+      "Solve puzzles with a dedicated solving mode",
+      "Menu-driven navigation between game modes",
+      "Maven-based build"
+    ],
+    "year": "2025",
+    "role": "Desktop app development",
+    "stack": ["Java", "Java Swing", "Maven"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/NonoGrams" }],
+    "hero": { "src": "https://i.ibb.co.com/svyfDTds/Screenshot-2025-12-22-032905.png", "alt": "NonoGrams — puzzle view" },
     "gallery": [
-      { "src": "projects/sample-two/shot-1.svg", "alt": "Diagram 1" },
-      { "src": "projects/sample-two/shot-2.svg", "alt": "Diagram 2" },
-      { "src": "projects/sample-two/shot-3.svg", "alt": "Diagram 3" }
+      { "src": "https://i.ibb.co.com/yFCX0cVY/Screenshot-2025-12-22-032932.png", "alt": "NonoGrams — creating a puzzle" },
+      { "src": "https://i.ibb.co.com/FbR0dL0P/Screenshot-2025-12-22-033132.png", "alt": "NonoGrams — solving mode" }
     ]
   },
   {
-    "slug": "sample-three",
-    "name": "Sample Project Three",
-    "tagline": "A third placeholder, with fewer images.",
-    "description": "Placeholder description for the third project. A project can have 0 to 4 gallery images; the layout adapts.",
-    "features": ["Placeholder feature one", "Placeholder feature two"],
-    "year": "2024",
-    "role": "Design",
-    "stack": [],
-    "links": [],
-    "hero": { "src": "projects/sample-three/hero.svg", "alt": "Sample Project Three — main preview" },
+    "slug": "dhaka-bus-navigator",
+    "name": "Dhaka Bus Navigator",
+    "tagline": "Route planner for Dhaka's bus network.",
+    "description": "A modern web app for navigating bus routes in Dhaka, Bangladesh — smart route planning, live fare estimates and community-sourced route updates.",
+    "features": [
+      "Smart route planning with minimal transfers",
+      "Real-time fare estimates and journey times",
+      "Interactive route maps via Leaflet.js",
+      "Multi-language support (English and Bangla)",
+      "Community feedback for submitting route updates",
+      "Responsive design with Row Level Security on Supabase tables"
+    ],
+    "year": "2025",
+    "role": "Full-stack development",
+    "stack": ["React 18", "Vite", "Tailwind CSS", "Framer Motion", "Leaflet.js", "Supabase"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/dhaka-bus-navigator" }],
+    "hero": { "src": "https://i.ibb.co/RGHMc5x2/screencapture-localhost-3000-2025-10-01-04-33-13.png", "alt": "Dhaka Bus Navigator — route planner" },
+    "gallery": []
+  },
+  {
+    "slug": "music-player-app",
+    "name": "Music Player App (Android)",
+    "tagline": "Android music player with Firebase and ExoPlayer.",
+    "description": "An Android music player app that lets users browse music by genre and curated sections, stream songs via JukeHost, and play them with ExoPlayer.",
+    "features": [
+      "Music playback via ExoPlayer",
+      "Curated sections: Top Music, Most Played",
+      "Filter/browse music by genre",
+      "Firebase-based user authentication (login/signup)",
+      "Audio streaming via JukeHost links",
+      "Cover art hosted via imgbb.com"
+    ],
+    "year": "2025",
+    "role": "Mobile app development",
+    "stack": ["Kotlin", "Android", "Firebase Firestore", "ExoPlayer"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Music-Player-App" }],
+    "hero": { "src": "https://i.ibb.co/Vcxxrrx4/Whats-App-Image-2025-06-29-at-22-36-33-1092d730.jpg", "alt": "Music Player App — browsing view" },
     "gallery": [
-      { "src": "projects/sample-three/shot-1.svg", "alt": "Screenshot 1" },
-      { "src": "projects/sample-three/shot-2.svg", "alt": "Screenshot 2" }
+      { "src": "https://i.ibb.co/hrBWvJ6/Whats-App-Image-2025-06-29-at-22-47-16-7911797c.jpg", "alt": "Music Player App — player view" },
+      { "src": "https://i.ibb.co/RpgMsQfR/Whats-App-Image-2025-06-29-at-22-36-33-54321f79.jpg", "alt": "Music Player App — genre view" }
     ]
+  },
+  {
+    "slug": "music-admin-panel",
+    "name": "Music Admin Panel",
+    "tagline": "Android admin companion for Music Player App.",
+    "description": "An Android admin panel companion app for the Music Player App, used to upload and manage song metadata in the shared Firebase Firestore database.",
+    "features": [
+      "Upload new song metadata (ID, title, artist, cover URL, audio URL) to Firebase",
+      "Genre selection and assignment (Pop, Rock, HipHop, etc.)",
+      "Automatically updates the songs collection and matching genre document",
+      "Lightweight, single-page admin UI",
+      "Designed to pair directly with Music Player App's Firebase schema"
+    ],
+    "year": "2025",
+    "role": "Mobile app development",
+    "stack": ["Kotlin", "Android", "Firebase Firestore"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Music-Admin-Panel" }],
+    "hero": { "src": "projects/music-admin-panel/hero.svg", "alt": "Music Admin Panel — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "moisture-detection-auto-irrigation-iot",
+    "name": "Soil Moisture & Auto-Irrigation (IoT)",
+    "tagline": "Android companion app for an IoT irrigation system.",
+    "description": "An Android companion app for an IoT-based soil moisture detection and automatic irrigation system, reading sensor data and triggering irrigation.",
+    "features": [
+      "Android app scaffold for an IoT moisture-sensing/irrigation project",
+      "Displays soil moisture sensor readings",
+      "Provides irrigation control/automation triggers",
+      "Standard Gradle/Android Studio project structure"
+    ],
+    "year": "2025",
+    "role": "Mobile app development",
+    "stack": ["Kotlin", "Android"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Moisure-Detection-and-Auto-Irrigation-IoT-project" }],
+    "hero": { "src": "projects/moisture-detection-auto-irrigation-iot/hero.svg", "alt": "Soil Moisture IoT App — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "service-squad",
+    "name": "Service Squad",
+    "tagline": "Desktop app connecting users with trusted home-service pros.",
+    "description": "A JavaFX desktop app connecting users with trusted professionals for babysitting, cooking and home maintenance, from booking through payment.",
+    "features": [
+      "Connects users with vetted service professionals",
+      "End-to-end flow from booking to payment",
+      "Schedule management for booked services",
+      "Service quality verification and review tools",
+      "Desktop JavaFX UI backed by a local SQLite database"
+    ],
+    "year": "2024",
+    "role": "Desktop app development",
+    "stack": ["Java", "JavaFX", "SQLite", "Maven"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Service-Squad" }],
+    "hero": { "src": "projects/service-squad/hero.svg", "alt": "Service Squad — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "task-manager-app",
+    "name": "Task Manager App",
+    "tagline": "Python desktop task manager with notifications.",
+    "description": "A Python desktop task manager built with Kivy and KivyMD for creating, managing and tracking tasks with date/time-based notifications.",
+    "features": [
+      "User authentication (login and registration)",
+      "Add, edit and delete tasks with date/time-based notifications",
+      "Mark tasks as completed",
+      "History tracking for completed tasks",
+      "SQLite-backed data storage",
+      "Cross-platform, responsive UI via KivyMD"
+    ],
+    "year": "2024",
+    "role": "Desktop app development",
+    "stack": ["Python", "Kivy", "KivyMD", "SQLite"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Task-Manager-app" }],
+    "hero": { "src": "projects/task-manager-app/hero.svg", "alt": "Task Manager App — placeholder preview" },
+    "gallery": []
+  },
+  {
+    "slug": "practice",
+    "name": "Practice",
+    "tagline": "C++ practice programs and competitive-programming solutions.",
+    "description": "A collection of standalone C++ practice programs and competitive-programming solutions — fundamentals exercises, algorithm drills and scheduling implementations.",
+    "features": [
+      "Competitive-programming style solutions (e.g. Bear and Big Brother, Sereja and Dima, Team)",
+      "CPU scheduling algorithm implementation (FCFS)",
+      "Day-by-day C++ fundamentals exercises (loops, classes vs. instances)",
+      "Miscellaneous algorithm/math practice snippets"
+    ],
+    "year": "2024",
+    "role": "Practice / coursework",
+    "stack": ["C++"],
+    "links": [{ "label": "SOURCE", "url": "https://github.com/Muhit-1/Practice" }],
+    "hero": { "src": "projects/practice/hero.svg", "alt": "Practice — placeholder preview" },
+    "gallery": []
   }
 ]
