@@ -26,6 +26,17 @@
   letter-spacing:.12em; color:#8A2B2B; text-decoration:none; border-bottom:1px solid currentColor; cursor:pointer; }
 .pg-back:hover,.pg-back:focus-visible{ color:var(--red); }
 
+/* --- end-of-book navigation: closing page + endpaper get a second way home --- */
+.pg-back-row{ display:flex; flex-wrap:wrap; gap:calc(var(--px)*20); margin-top:calc(var(--px)*14); }
+.pg-back-row .pg-back{ margin-top:0; }
+.endpaper .pg-back-row{ justify-content:center; }
+
+/* --- auto-fit: every page's content sits in one of these wrappers. main.js measures it against
+   the page's real height and sets --fit so long descriptions, feature lists, screenshot grids or a
+   long index shrink just enough to keep everything on the page — nothing is ever clipped. Scaling the
+   whole block keeps every size/spacing ratio identical, so it reads as the same design, just smaller. */
+.pg-fit{ transform:scale(var(--fit,1)); transform-origin:top left; width:calc(100% / var(--fit,1)); }
+
 /* --- index page --- */
 .idx-list{ list-style:none; margin:calc(var(--px)*14) 0 0; padding:0; }
 .idx-list li{ border-bottom:1px solid rgba(0,0,0,.16); }
@@ -41,6 +52,20 @@
 .idx-list[data-dense] a{ padding:calc(var(--px)*4) 0; }
 .idx-list[data-dense] i{ display:none; }
 .idx-empty{ margin-top:calc(var(--px)*14); font-size:calc(var(--px)*13); color:#4A453F; }
+
+/* --- index page: category groups (by role), laid out in two columns so ~25 projects
+   sit at a comfortable size instead of shrinking hard to fit one long column --- */
+.idx-columns{ margin-top:calc(var(--px)*10); }
+.idx-columns[data-columns="2"]{ column-count:2; column-gap:calc(var(--px)*30); }
+.idx-group{ margin-top:calc(var(--px)*14); break-inside:avoid; }
+.idx-group:first-child{ margin-top:0; }
+.idx-cat{ display:flex; align-items:baseline; justify-content:space-between; gap:calc(var(--px)*10);
+  padding-bottom:calc(var(--px)*4); border-bottom:1px solid rgba(0,0,0,.22); }
+.idx-cat span{ font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); letter-spacing:.16em;
+  font-weight:500; color:#8A2B2B; text-transform:uppercase; }
+.idx-cat i{ font-style:normal; font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10); color:#4A453F;
+  border:1px solid rgba(0,0,0,.3); border-radius:calc(var(--px)*20); padding:0 calc(var(--px)*7); line-height:calc(var(--px)*15); }
+.idx-group .idx-list{ margin-top:calc(var(--px)*2); }
 
 /* --- project, left page: name / description / features --- */
 .pj-feat-h{ margin:calc(var(--px)*12) 0 calc(var(--px)*4); font-family:'IBM Plex Mono',monospace; font-size:calc(var(--px)*10.5);

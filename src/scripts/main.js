@@ -31,6 +31,31 @@
     setInterval(tick, 15000);
   }
 
+  /* ---- auto-fit: shrink a page's content just enough to keep everything on the page
+     (a long description, a full feature list, a 4-shot gallery, or the categorized index).
+     Scaling is proportional, so type size / spacing ratios and colors never change — only the
+     overall size does, and only on pages whose real content needs it. ---- */
+  function fitPages() {
+    document.querySelectorAll('.pg-fit').forEach(function (el) {
+      var face = el.closest('.face');
+      if (!face) return;
+      el.style.setProperty('--fit', 1);
+      var cs = getComputedStyle(face);
+      var available = face.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var natural = el.scrollHeight;
+      var fit = natural > 0 && natural > available ? available / natural : 1;
+      el.style.setProperty('--fit', fit.toFixed(3));
+    });
+  }
+  fitPages();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPages);
+  window.addEventListener('load', fitPages);
+  var fitResizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(fitResizeTimer);
+    fitResizeTimer = setTimeout(fitPages, 150);
+  });
+
   if (!scroller) return;
 
   var queued = false;
